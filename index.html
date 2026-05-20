@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基于数据挖掘的电商广告推荐效果研究</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title::before {
+            content: '';
+            width: 8px;
+            height: 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 4px;
+            margin-right: 12px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .chart-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 20px;
+        }
+
+        .chart-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .chart-item img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .chart-caption {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .report-section {
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .report-section h3 {
+            color: #333;
+            margin: 20px 0 10px;
+            font-size: 1.2rem;
+        }
+
+        .report-section p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .report-section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .report-section li {
+            margin-bottom: 8px;
+        }
+
+        .cluster-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .cluster-table th, .cluster-table td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cluster-table th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        .cluster-table tr:hover {
+            background: #f5f7fa;
+        }
+
+        .cluster-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>基于数据挖掘的电商广告推荐效果研究</h1>
+            <p>Data Mining Based E-commerce Advertising Recommendation Effect Research</p>
+        </header>
+
+        <div class="card">
+            <div class="card-title">数据概览</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">3,280</div>
+                    <div class="stat-label">原始样本数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">2,359</div>
+                    <div class="stat-label">有效样本数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">1,560</div>
+                    <div class="stat-label">特征维度</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">3.91%</div>
+                    <div class="stat-label">平均点击率</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">分析图表</div>
+            <div class="chart-container">
+                <div class="chart-item">
+                    <img src="ctr_distribution.png" alt="点击率分布图">
+                    <div class="chart-caption">点击率(CTR)分布</div>
+                </div>
+                <div class="chart-item">
+                    <img src="impression_click.png" alt="曝光量与点击量关系图">
+                    <div class="chart-caption">曝光量与点击量关系</div>
+                </div>
+                <div class="chart-item">
+                    <img src="feature_importance.png" alt="特征重要性图">
+                    <div class="chart-caption">Top 20特征重要性</div>
+                </div>
+                <div class="chart-item">
+                    <img src="cluster_ctr.png" alt="各簇点击率对比图">
+                    <div class="chart-caption">各簇平均点击率对比</div>
+                </div>
+                <div class="chart-item">
+                    <img src="elbow_method.png" alt="肘部法则图">
+                    <div class="chart-caption">肘部法则确定聚类数</div>
+                </div>
+                <div class="chart-item">
+                    <img src="clustering_result.png" alt="聚类结果图">
+                    <div class="chart-caption">用户聚类结果(PCA降维)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">聚类分析结果</div>
+            <table class="cluster-table">
+                <tr>
+                    <th>簇标签</th>
+                    <th>平均点击率</th>
+                    <th>群体特征</th>
+                </tr>
+                <tr>
+                    <td>簇0</td>
+                    <td><span class="highlight">2.69%</span></td>
+                    <td>低点击率群体</td>
+                </tr>
+                <tr>
+                    <td>簇1</td>
+                    <td><span class="highlight">3.81%</span></td>
+                    <td>中等点击率群体</td>
+                </tr>
+                <tr>
+                    <td>簇2</td>
+                    <td><span class="highlight">5.16%</span></td>
+                    <td>高点击率群体</td>
+                </tr>
+                <tr>
+                    <td>簇3</td>
+                    <td><span class="highlight">5.03%</span></td>
+                    <td>高点击率群体</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="card">
+            <div class="card-title">结论与建议</div>
+            <div class="report-section">
+                <h3>📊 主要发现</h3>
+                <p><strong>特征重要性分析：</strong>随机森林模型R²达到0.8708，表明特征变量对点击率具有较强的解释能力，部分特征对点击率有显著影响。</p>
+                <p><strong>用户细分：</strong>通过K-Means聚类将用户分为4个群体，各群体点击率存在显著差异（2.69% - 5.16%）。</p>
+                <p><strong>协同过滤：</strong>基于余弦相似度的用户相似度计算为个性化推荐提供了支持。</p>
+
+                <h3>💡 建议策略</h3>
+                <ul>
+                    <li><strong>高点击率群体（簇2、簇3）：</strong>保持现有推荐策略，进一步优化推荐精度，提高广告投放效率。</li>
+                    <li><strong>中等点击率群体（簇1）：</strong>分析其特征偏好，调整广告内容，提升转化效果。</li>
+                    <li><strong>低点击率群体（簇0）：</strong>重新评估投放策略，优化广告创意和投放时机。</li>
+                    <li><strong>曝光量控制：</strong>曝光量与点击量呈正相关，但存在边际效益递减，建议合理控制投放量。</li>
+                </ul>
+
+                <h3>🔮 未来展望</h3>
+                <p>建议进一步分析高重要性特征的具体含义，结合用户画像进行精准推荐。同时，可以尝试结合深度学习模型提升推荐效果，实现更精准的广告投放策略。</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">模型评估指标</div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">6.35</div>
+                    <div class="stat-label">均方误差(MSE)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">87.08%</div>
+                    <div class="stat-label">决定系数(R²)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">最佳聚类数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">2.47%</div>
+                    <div class="stat-label">最大点击率差异</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2026 基于数据挖掘的电商广告推荐效果研究 | 数据来源：add.csv</p>
+        </footer>
+    </div>
+</body>
+</html>

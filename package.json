@@ -1,0 +1,13 @@
+{
+  "name": "ecommerce-ad-recommendation",
+  "version": "1.0.0",
+  "description": "基于数据挖掘的电商广告推荐效果研究",
+  "scripts": {
+    "build": "mkdir -p dist && cp index.html dist/ && cp *.png dist/",
+    "dev": "npx serve -s . -l 8000",
+    "deploy": "npx gh-pages -d ."
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.0"
+  }
+}
