@@ -7,188 +7,158 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: 
-                radial-gradient(ellipse at 15% 15%, rgba(59, 130, 246, 0.12) 0%, transparent 45%),
-                radial-gradient(ellipse at 85% 85%, rgba(139, 92, 246, 0.12) 0%, transparent 45%),
-                radial-gradient(ellipse at 50% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 20% 80%, rgba(16, 185, 129, 0.06) 0%, transparent 40%),
-                radial-gradient(ellipse at 80% 20%, rgba(236, 72, 153, 0.06) 0%, transparent 40%),
-                linear-gradient(180deg, #f1f5f9 0%, #e8f0fe 50%, #fef3c7 100%);
-            background-attachment: fixed;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
             color: #1e293b;
             min-height: 100vh;
+        }
+        .top-nav {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 0 30px;
+            height: 70px;
             display: flex;
-            position: relative;
-        }
-        body::before {
-            content: '';
-            position: fixed;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
             top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: 
-                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-            z-index: 0;
+            z-index: 100;
         }
-        .sidebar {
-            width: 260px;
-            background: 
-                linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.96) 100%),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 0%, transparent 50%);
-            border-right: 1px solid rgba(59, 130, 246, 0.1);
-            padding: 20px;
-            flex-shrink: 0;
-            box-shadow: 
-                2px 0 30px rgba(59, 130, 246, 0.08),
-                inset -2px 0 20px rgba(59, 130, 246, 0.02);
-            position: relative;
-            z-index: 1;
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
         }
-        .sidebar-header {
-            padding-bottom: 20px;
-            border-bottom: 1px solid #e2e8f0;
-            margin-bottom: 20px;
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         .logo {
             width: 44px;
             height: 44px;
-            background: #3b82f6;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 22px;
             color: white;
-            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
-        .logo-title {
+        .logo-text {
             font-size: 18px;
             font-weight: 600;
-            color: #1e293b;
+            color: white;
         }
-        .nav-section {
-            margin-bottom: 24px;
-        }
-        .nav-section-title {
-            font-size: 11px;
-            font-weight: 600;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 8px;
-            padding-left: 8px;
+        .nav-menu {
+            display: flex;
+            gap: 4px;
         }
         .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 11px 14px;
-            border-radius: 10px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: #cbd5e1;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.25s ease;
-            color: #475569;
-            font-size: 14px;
             position: relative;
-            overflow: hidden;
-        }
-        .nav-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.05), transparent);
-            transition: left 0.3s ease;
-        }
-        .nav-item:hover::before {
-            left: 100%;
         }
         .nav-item:hover {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(139, 92, 246, 0.06) 100%);
-            color: #1e293b;
-            transform: translateX(2px);
-            box-shadow: 0 2px 12px rgba(59, 130, 246, 0.1);
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
         }
         .nav-item.active {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.12) 0%, rgba(139, 92, 246, 0.08) 100%);
-            color: #1d4ed8;
-            box-shadow: 
-                0 2px 12px rgba(59, 130, 246, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(59, 130, 246, 0.2);
+            color: white;
+            background: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
         }
-        .nav-item-icon {
-            font-size: 18px;
+        .nav-item.has-submenu::after {
+            content: '▼';
+            font-size: 10px;
+            margin-left: 6px;
+            opacity: 0.6;
         }
-        .nav-submenu {
-            padding-left: 16px;
+        .submenu-container {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            padding: 8px 0;
             display: none;
+            z-index: 101;
         }
-        .nav-submenu.show {
+        .nav-item.has-submenu:hover .submenu-container {
             display: block;
         }
-        .nav-subitem {
-            padding: 8px 12px;
-            font-size: 13px;
-            color: #64748b;
+        .submenu-item {
+            padding: 11px 20px;
+            color: #475569;
+            font-size: 14px;
             cursor: pointer;
-            border-radius: 6px;
             transition: all 0.2s;
         }
-        .nav-subitem:hover {
+        .submenu-item:hover {
             background: #f1f5f9;
             color: #1e293b;
         }
-        .nav-subitem.active {
-            background: #f1f5f9;
-            color: #3b82f6;
-            font-weight: 500;
-        }
-        .main-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-        .header {
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-        }
-        .header-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-        .header-info {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            color: #64748b;
-            font-size: 14px;
-        }
-        .info-badge {
-            padding: 6px 12px;
+        .submenu-item.active {
             background: #dbeafe;
             color: #1d4ed8;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
         }
-        .content-area {
-            padding: 24px 30px;
-            max-width: 1400px;
-            width: 100%;
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .status-badge {
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .nav-divider {
+            width: 1px;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        .main-content {
+            padding: 30px;
+            max-width: 1600px;
             margin: 0 auto;
         }
         .page-section {
@@ -197,97 +167,116 @@
         .page-section.active {
             display: block;
         }
-        .card {
-            background: 
-                linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(254,254,254,0.95) 100%),
-                linear-gradient(180deg, rgba(59, 130, 246, 0.02) 0%, transparent 50%);
-            border: 1px solid rgba(59, 130, 246, 0.1);
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, white 0%, #f8fafc 100%);
             border-radius: 16px;
             padding: 24px;
-            margin-bottom: 24px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
             box-shadow: 
-                0 4px 25px rgba(59, 130, 246, 0.06),
-                0 1px 3px rgba(0, 0, 0, 0.04),
+                0 4px 20px rgba(59, 130, 246, 0.06),
                 inset 0 1px 0 rgba(255, 255, 255, 0.8);
             position: relative;
-            z-index: 1;
             overflow: hidden;
         }
-        .card::before {
+        .stat-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
+            height: 4px;
             background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #f59e0b 100%);
-            opacity: 0.6;
+        }
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        .stat-trend {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+        .stat-trend.up {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+        .stat-trend.down {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+        .stat-value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #64748b;
+        }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 28px;
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
         }
         .card-title {
-            font-size: 18px;
+            font-size: 19px;
             font-weight: 600;
             color: #1e293b;
-            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         .card-title-icon {
-            font-size: 20px;
+            font-size: 22px;
         }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+        .card-actions {
+            display: flex;
+            gap: 12px;
         }
-        .stat-card {
-            background: 
-                linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(240,247,255,0.95) 100%),
-                linear-gradient(180deg, rgba(59, 130, 246, 0.04) 0%, transparent 60%);
-            border: 1px solid rgba(59, 130, 246, 0.15);
-            border-radius: 14px;
-            padding: 22px;
-            text-align: center;
-            box-shadow: 
-                0 4px 16px rgba(59, 130, 246, 0.08),
-                0 1px 3px rgba(0, 0, 0, 0.04),
-                inset 0 1px 0 rgba(255, 255, 255, 0.9);
-            position: relative;
-            overflow: hidden;
-        }
-        .stat-card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
-        }
-        .stat-value {
-            font-size: 28px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 4px;
-        }
-        .stat-label {
+        .btn {
+            padding: 8px 16px;
+            border-radius: 8px;
             font-size: 13px;
-            color: #64748b;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
         }
-        .stat-trend {
-            font-size: 12px;
-            margin-top: 8px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            display: inline-block;
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
         }
-        .stat-trend.up {
-            background: #dcfce7;
-            color: #16a34a;
-        }
-        .stat-trend.down {
-            background: #fee2e2;
-            color: #dc2626;
+        .btn-secondary:hover {
+            background: #e2e8f0;
         }
         .chart-grid {
             display: grid;
@@ -295,22 +284,23 @@
             gap: 20px;
         }
         .chart-box {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
-            border: 1px solid #dbeafe;
+            background: #f8fafc;
             border-radius: 12px;
-            padding: 16px;
+            padding: 20px;
             text-align: center;
-            box-shadow: 0 2px 12px rgba(59, 130, 246, 0.05);
+            border: 1px solid rgba(59, 130, 246, 0.08);
         }
         .chart-box img {
             max-width: 100%;
             max-height: 180px;
-            border-radius: 8px;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         }
         .chart-label {
             font-size: 13px;
             color: #64748b;
-            margin-top: 10px;
+            margin-top: 12px;
+            font-weight: 500;
         }
         .table-container {
             overflow-x: auto;
@@ -320,7 +310,7 @@
             border-collapse: collapse;
         }
         .data-table th, .data-table td {
-            padding: 14px 16px;
+            padding: 15px 18px;
             text-align: left;
             border-bottom: 1px solid #e2e8f0;
         }
@@ -335,9 +325,9 @@
         .data-table tr:hover {
             background: #f8fafc;
         }
-        .data-table .highlight {
-            padding: 4px 10px;
-            border-radius: 4px;
+        .highlight {
+            padding: 6px 12px;
+            border-radius: 6px;
             font-weight: 600;
             font-size: 13px;
         }
@@ -351,42 +341,12 @@
         .text-section strong {
             color: #1e293b;
         }
-        .method-list {
-            margin-top: 20px;
-            padding-left: 20px;
-        }
-        .method-list li {
-            margin-bottom: 12px;
-            color: #475569;
-        }
-        .metric-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-        .metric-card {
-            text-align: center;
-            padding: 26px;
-            background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
-            border: 1px solid #dbeafe;
-            border-radius: 12px;
-            box-shadow: 0 2px 12px rgba(59, 130, 246, 0.05);
-        }
-        .metric-value {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-        .metric-label {
-            font-size: 13px;
-            color: #64748b;
-        }
         .info-box {
-            background: #dbeafe;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(139, 92, 246, 0.06) 100%);
             border-left: 4px solid #3b82f6;
-            padding: 16px 20px;
-            border-radius: 0 8px 8px 0;
-            margin-top: 16px;
+            padding: 20px;
+            border-radius: 0 10px 10px 0;
+            margin-top: 20px;
         }
         .info-box p {
             margin: 0;
@@ -399,14 +359,13 @@
             gap: 20px;
         }
         .analysis-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
-            border: 1px solid #dbeafe;
-            border-radius: 12px;
-            padding: 22px;
-            box-shadow: 0 2px 12px rgba(59, 130, 246, 0.05);
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 24px;
+            border: 1px solid rgba(59, 130, 246, 0.08);
         }
         .analysis-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             color: #1e293b;
             margin-bottom: 12px;
@@ -416,574 +375,639 @@
             color: #64748b;
             line-height: 1.6;
         }
+        .method-list {
+            margin-top: 20px;
+            padding-left: 24px;
+        }
+        .method-list li {
+            margin-bottom: 14px;
+            color: #475569;
+            font-size: 14px;
+        }
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .metric-card {
+            text-align: center;
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 14px;
+            border: 1px solid rgba(59, 130, 246, 0.08);
+        }
+        .metric-value {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .metric-label {
+            font-size: 13px;
+            color: #64748b;
+        }
         .strategy-list {
-            margin-top: 16px;
-            padding-left: 20px;
+            margin-top: 20px;
+            padding-left: 24px;
         }
         .strategy-list li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             color: #475569;
             font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">📊</div>
-            <div class="logo-title">电商广告分析</div>
-        </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">主导航</div>
-            <div class="nav-item active" onclick="showSection('home')">
-                <span class="nav-item-icon">🏠</span>
-                <span>首页概览</span>
+    <div class="top-nav">
+        <div class="nav-left">
+            <div class="logo-area">
+                <div class="logo">📊</div>
+                <span class="logo-text">电商广告分析</span>
             </div>
-            <div class="nav-item" onclick="toggleSubmenu('dataMenu')">
-                <span class="nav-item-icon">📁</span>
-                <span>数据管理</span>
-            </div>
-            <div class="nav-submenu" id="dataMenu">
-                <div class="nav-subitem" onclick="showSection('dataOverview')">数据概览</div>
-                <div class="nav-subitem" onclick="showSection('dataPreprocessing')">数据预处理</div>
-                <div class="nav-subitem" onclick="showSection('dataStatistics')">描述统计</div>
-            </div>
-            <div class="nav-item" onclick="toggleSubmenu('analysisMenu')">
-                <span class="nav-item-icon">🔍</span>
-                <span>分析方法</span>
-            </div>
-            <div class="nav-submenu" id="analysisMenu">
-                <div class="nav-subitem" onclick="showSection('featureAnalysis')">特征重要性</div>
-                <div class="nav-subitem" onclick="showSection('clusterAnalysis')">聚类分析</div>
-                <div class="nav-subitem" onclick="showSection('modelEvaluation')">模型评估</div>
-            </div>
-            <div class="nav-item" onclick="showSection('results')">
-                <span class="nav-item-icon">📈</span>
-                <span>分析结果</span>
-            </div>
-            <div class="nav-item" onclick="showSection('recommendations')">
-                <span class="nav-item-icon">💡</span>
-                <span>优化建议</span>
+            <div class="nav-menu">
+                <div class="nav-item active" onclick="showSection('home')">🏠 首页概览</div>
+                <div class="nav-item has-submenu">
+                    📁 数据管理
+                    <div class="submenu-container">
+                        <div class="submenu-item" onclick="showSection('dataOverview')">数据概览</div>
+                        <div class="submenu-item" onclick="showSection('dataPreprocessing')">数据预处理</div>
+                        <div class="submenu-item" onclick="showSection('dataStatistics')">描述统计</div>
+                    </div>
+                </div>
+                <div class="nav-item has-submenu">
+                    🔍 分析方法
+                    <div class="submenu-container">
+                        <div class="submenu-item" onclick="showSection('featureAnalysis')">特征重要性</div>
+                        <div class="submenu-item" onclick="showSection('clusterAnalysis')">聚类分析</div>
+                        <div class="submenu-item" onclick="showSection('modelEvaluation')">模型评估</div>
+                    </div>
+                </div>
+                <div class="nav-item" onclick="showSection('results')">📈 分析结果</div>
+                <div class="nav-item" onclick="showSection('recommendations')">💡 优化建议</div>
+                <div class="nav-item" onclick="window.open('dashboard.html')">📊 可视化大屏</div>
             </div>
         </div>
-        
-        <div class="nav-section">
-            <div class="nav-section-title">工具</div>
-            <div class="nav-item" onclick="window.open('dashboard.html')">
-                <span class="nav-item-icon">📊</span>
-                <span>可视化大屏</span>
+        <div class="nav-right">
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>已分析: 2,359 样本</span>
             </div>
+            <div class="nav-divider"></div>
+            <div class="user-icon">👤</div>
         </div>
     </div>
     
     <div class="main-content">
-        <div class="header">
-            <div class="header-title" id="pageTitle">首页概览</div>
-            <div class="header-info">
-                <span>数据更新: 2026-05-25</span>
-                <span class="info-badge">已分析: 2,359 样本</span>
-            </div>
-        </div>
-        
-        <div class="content-area">
-            <div class="page-section active" id="home">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-value">3,280</div>
-                        <div class="stat-label">原始样本数</div>
-                        <div class="stat-trend up">↑ 12.5%</div>
+        <div class="page-section active" id="home">
+            <div class="stats-row">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">📊</div>
+                        <span class="stat-trend up">↑ 12.5%</span>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-value">2,359</div>
-                        <div class="stat-label">有效样本数</div>
-                        <div class="stat-trend up">↑ 8.3%</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">1,560</div>
-                        <div class="stat-label">特征维度</div>
-                        <div class="stat-trend up">↑ 156</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">3.91%</div>
-                        <div class="stat-label">平均点击率</div>
-                        <div class="stat-trend down">↓ 0.2%</div>
-                    </div>
+                    <div class="stat-value">3,280</div>
+                    <div class="stat-label">原始样本数</div>
                 </div>
-                
-                <div class="card">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">✅</div>
+                        <span class="stat-trend up">↑ 8.3%</span>
+                    </div>
+                    <div class="stat-value">2,359</div>
+                    <div class="stat-label">有效样本数</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">🎯</div>
+                        <span class="stat-trend down">↓ 0.2%</span>
+                    </div>
+                    <div class="stat-value">3.91%</div>
+                    <div class="stat-label">平均点击率</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">🔑</div>
+                        <span class="stat-trend up">↑ 156</span>
+                    </div>
+                    <div class="stat-value">1,560</div>
+                    <div class="stat-label">特征维度</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">📈</span>
                         可视化图表
                     </div>
-                    <div class="chart-grid">
-                        <div class="chart-box">
-                            <img src="ctr_distribution.png" alt="点击率分布">
-                            <div class="chart-label">点击率分布</div>
-                        </div>
-                        <div class="chart-box">
-                            <img src="feature_importance.png" alt="特征重要性">
-                            <div class="chart-label">特征重要性</div>
-                        </div>
-                        <div class="chart-box">
-                            <img src="cluster_ctr.png" alt="各簇点击率">
-                            <div class="chart-label">各簇点击率对比</div>
-                        </div>
+                    <div class="card-actions">
+                        <button class="btn btn-secondary">查看全部</button>
                     </div>
                 </div>
-                
-                <div class="card">
+                <div class="chart-grid">
+                    <div class="chart-box">
+                        <img src="ctr_distribution.png" alt="点击率分布">
+                        <div class="chart-label">点击率分布</div>
+                    </div>
+                    <div class="chart-box">
+                        <img src="feature_importance.png" alt="特征重要性">
+                        <div class="chart-label">特征重要性</div>
+                    </div>
+                    <div class="chart-box">
+                        <img src="cluster_ctr.png" alt="各簇点击率">
+                        <div class="chart-label">各簇点击率对比</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">🎯</span>
                         聚类分析结果
                     </div>
-                    <div class="table-container">
-                        <table class="data-table">
-                            <tr>
-                                <th>簇标签</th>
-                                <th>平均点击率</th>
-                                <th>样本数量</th>
-                                <th>群体特征</th>
-                            </tr>
-                            <tr>
-                                <td>簇0</td>
-                                <td><span class="highlight highlight-low">2.69%</span></td>
-                                <td>620</td>
-                                <td>低点击率群体</td>
-                            </tr>
-                            <tr>
-                                <td>簇1</td>
-                                <td><span class="highlight highlight-medium">3.81%</span></td>
-                                <td>580</td>
-                                <td>中等点击率群体</td>
-                            </tr>
-                            <tr>
-                                <td>簇2</td>
-                                <td><span class="highlight highlight-high">5.16%</span></td>
-                                <td>650</td>
-                                <td>高点击率群体</td>
-                            </tr>
-                            <tr>
-                                <td>簇3</td>
-                                <td><span class="highlight highlight-high">5.03%</span></td>
-                                <td>509</td>
-                                <td>高点击率群体</td>
-                            </tr>
-                        </table>
-                    </div>
                 </div>
-                
-                <div class="card">
+                <div class="table-container">
+                    <table class="data-table">
+                        <tr>
+                            <th>簇标签</th>
+                            <th>平均点击率</th>
+                            <th>样本数量</th>
+                            <th>群体特征</th>
+                        </tr>
+                        <tr>
+                            <td>簇0</td>
+                            <td><span class="highlight highlight-low">2.69%</span></td>
+                            <td>620</td>
+                            <td>低点击率群体</td>
+                        </tr>
+                        <tr>
+                            <td>簇1</td>
+                            <td><span class="highlight highlight-medium">3.81%</span></td>
+                            <td>580</td>
+                            <td>中等点击率群体</td>
+                        </tr>
+                        <tr>
+                            <td>簇2</td>
+                            <td><span class="highlight highlight-high">5.16%</span></td>
+                            <td>650</td>
+                            <td>高点击率群体</td>
+                        </tr>
+                        <tr>
+                            <td>簇3</td>
+                            <td><span class="highlight highlight-high">5.03%</span></td>
+                            <td>509</td>
+                            <td>高点击率群体</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">💡</span>
                         核心发现
                     </div>
-                    <div class="text-section">
-                        <p><strong>主要发现：</strong>随机森林模型R²达到87.08%，表明特征对点击率有很强的解释能力。通过K-Means聚类将用户分为4个群体，点击率差异达2.47%。</p>
-                        <div class="info-box">
-                            <p>💡 提示：高点击率群体(簇2、簇3)与低点击率群体(簇0)之间存在显著差异，建议针对不同群体制定差异化广告策略。</p>
-                        </div>
+                </div>
+                <div class="text-section">
+                    <p><strong>主要发现：</strong>随机森林模型R²达到87.08%，表明特征对点击率有很强的解释能力。通过K-Means聚类将用户分为4个群体，点击率差异达2.47%。</p>
+                    <div class="info-box">
+                        <p>💡 提示：高点击率群体(簇2、簇3)与低点击率群体(簇0)之间存在显著差异，建议针对不同群体制定差异化广告策略。</p>
                     </div>
                 </div>
             </div>
-            
-            <div class="page-section" id="dataOverview">
-                <div class="card">
+        </div>
+        
+        <div class="page-section" id="dataOverview">
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">📁</span>
                         数据集概览
                     </div>
-                    <div class="text-section">
-                        <p><strong>数据集名称：</strong>add.csv</p>
-                        <p><strong>数据来源：</strong>电商广告推荐系统日志</p>
-                        <p><strong>采集时间：</strong>2026年度</p>
-                        <p><strong>数据格式：</strong>CSV</p>
+                </div>
+                <div class="text-section">
+                    <p><strong>数据集名称：</strong>add.csv</p>
+                    <p><strong>数据来源：</strong>电商广告推荐系统日志</p>
+                    <p><strong>采集时间：</strong>2026年度</p>
+                    <p><strong>数据格式：</strong>CSV</p>
+                </div>
+                <div class="stats-row" style="margin-top: 24px;">
+                    <div class="stat-card">
+                        <div class="stat-value">3,280</div>
+                        <div class="stat-label">原始记录数</div>
                     </div>
-                    <div class="stats-grid" style="margin-top: 20px;">
-                        <div class="stat-card">
-                            <div class="stat-value">3,280</div>
-                            <div class="stat-label">原始记录数</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">2,359</div>
-                            <div class="stat-label">有效记录数</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">1,564</div>
-                            <div class="stat-label">总列数(特征)</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">72%</div>
-                            <div class="stat-label">数据完整性</div>
-                        </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2,359</div>
+                        <div class="stat-label">有效记录数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">1,564</div>
+                        <div class="stat-label">总列数(特征)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">72%</div>
+                        <div class="stat-label">数据完整性</div>
                     </div>
                 </div>
-                
-                <div class="card">
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">📋</span>
                         数据字段说明
                     </div>
-                    <div class="table-container">
-                        <table class="data-table">
-                            <tr>
-                                <th>字段名称</th>
-                                <th>数据类型</th>
-                                <th>说明</th>
-                            </tr>
-                            <tr>
-                                <td>列0</td>
-                                <td>整数</td>
-                                <td>样本ID</td>
-                            </tr>
-                            <tr>
-                                <td>列1</td>
-                                <td>整数</td>
-                                <td>广告曝光量</td>
-                            </tr>
-                            <tr>
-                                <td>列2</td>
-                                <td>整数</td>
-                                <td>广告点击量</td>
-                            </tr>
-                            <tr>
-                                <td>列3</td>
-                                <td>浮点数</td>
-                                <td>点击率(CTR)</td>
-                            </tr>
-                            <tr>
-                                <td>列4-1563</td>
-                                <td>整数/浮点数</td>
-                                <td>特征变量(大部分为二值编码)</td>
-                            </tr>
-                        </table>
-                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <tr>
+                            <th>字段名称</th>
+                            <th>数据类型</th>
+                            <th>说明</th>
+                        </tr>
+                        <tr>
+                            <td>列0</td>
+                            <td>整数</td>
+                            <td>样本ID</td>
+                        </tr>
+                        <tr>
+                            <td>列1</td>
+                            <td>整数</td>
+                            <td>广告曝光量</td>
+                        </tr>
+                        <tr>
+                            <td>列2</td>
+                            <td>整数</td>
+                            <td>广告点击量</td>
+                        </tr>
+                        <tr>
+                            <td>列3</td>
+                            <td>浮点数</td>
+                            <td>点击率(CTR)</td>
+                        </tr>
+                        <tr>
+                            <td>列4-1563</td>
+                            <td>整数/浮点数</td>
+                            <td>特征变量(大部分为二值编码)</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            
-            <div class="page-section" id="dataPreprocessing">
-                <div class="card">
+        </div>
+        
+        <div class="page-section" id="dataPreprocessing">
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">🔧</span>
                         数据预处理流程
                     </div>
-                    <div class="method-list">
-                        <li><strong>缺失值处理：</strong>原始数据中存在部分缺失值（用'?'表示），采用删除含缺失值样本的策略进行处理。</li>
-                        <li><strong>数据类型转换：</strong>将所有列转换为数值类型，确保后续分析的顺利进行。</li>
-                        <li><strong>异常值处理：</strong>删除最后一列包含非数值数据的列。</li>
-                        <li><strong>数据清洗：</strong>去除重复记录和明显异常值。</li>
-                    </div>
                 </div>
-                
-                <div class="card">
+                <div class="method-list">
+                    <li><strong>缺失值处理：</strong>原始数据中存在部分缺失值（用'?'表示），采用删除含缺失值样本的策略进行处理。</li>
+                    <li><strong>数据类型转换：</strong>将所有列转换为数值类型，确保后续分析的顺利进行。</li>
+                    <li><strong>异常值处理：</strong>删除最后一列包含非数值数据的列。</li>
+                    <li><strong>数据清洗：</strong>去除重复记录和明显异常值。</li>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">📊</span>
                         预处理结果
                     </div>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value">921</div>
-                            <div class="stat-label">删除记录数</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">1</div>
-                            <div class="stat-label">删除列数</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">2,359</div>
-                            <div class="stat-label">保留记录数</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">1,563</div>
-                            <div class="stat-label">保留列数</div>
-                        </div>
+                </div>
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-value">921</div>
+                        <div class="stat-label">删除记录数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">1</div>
+                        <div class="stat-label">删除列数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">2,359</div>
+                        <div class="stat-label">保留记录数</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">1,563</div>
+                        <div class="stat-label">保留列数</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="page-section" id="dataStatistics">
-                <div class="card">
+        </div>
+        
+        <div class="page-section" id="dataStatistics">
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">📈</span>
                         描述性统计分析
                     </div>
-                    <div class="analysis-grid">
-                        <div class="analysis-card">
-                            <div class="analysis-title">曝光量统计</div>
-                            <div class="analysis-desc">最小值: 1<br>最大值: 1200<br>平均值: 456.32</div>
-                        </div>
-                        <div class="analysis-card">
-                            <div class="analysis-title">点击量统计</div>
-                            <div class="analysis-desc">最小值: 0<br>最大值: 50<br>平均值: 18.76</div>
-                        </div>
-                        <div class="analysis-card">
-                            <div class="analysis-title">点击率统计</div>
-                            <div class="analysis-desc">最小值: 0.12%<br>最大值: 8.92%<br>平均值: 3.91%</div>
-                        </div>
-                        <div class="analysis-card">
-                            <div class="analysis-title">特征分布</div>
-                            <div class="analysis-desc">二值特征: 1,520个<br>连续特征: 40个<br>离散特征: 3个</div>
-                        </div>
+                </div>
+                <div class="analysis-grid">
+                    <div class="analysis-card">
+                        <div class="analysis-title">曝光量统计</div>
+                        <div class="analysis-desc">最小值: 1<br>最大值: 1200<br>平均值: 456.32</div>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="analysis-title">点击量统计</div>
+                        <div class="analysis-desc">最小值: 0<br>最大值: 50<br>平均值: 18.76</div>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="analysis-title">点击率统计</div>
+                        <div class="analysis-desc">最小值: 0.12%<br>最大值: 8.92%<br>平均值: 3.91%</div>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="analysis-title">特征分布</div>
+                        <div class="analysis-desc">二值特征: 1,520个<br>连续特征: 40个<br>离散特征: 3个</div>
                     </div>
                 </div>
-                
-                <div class="card">
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">📊</span>
                         统计图表
                     </div>
-                    <div class="chart-grid">
-                        <div class="chart-box">
-                            <img src="ctr_distribution.png" alt="点击率分布">
-                            <div class="chart-label">点击率分布</div>
-                        </div>
-                        <div class="chart-box">
-                            <img src="impression_click.png" alt="曝光量与点击量关系">
-                            <div class="chart-label">曝光量与点击量</div>
-                        </div>
-                        <div class="chart-box">
-                            <img src="elbow_method.png" alt="肘部法则">
-                            <div class="chart-label">肘部法则</div>
-                        </div>
+                </div>
+                <div class="chart-grid">
+                    <div class="chart-box">
+                        <img src="ctr_distribution.png" alt="点击率分布">
+                        <div class="chart-label">点击率分布</div>
+                    </div>
+                    <div class="chart-box">
+                        <img src="impression_click.png" alt="曝光量与点击量关系">
+                        <div class="chart-label">曝光量与点击量</div>
+                    </div>
+                    <div class="chart-box">
+                        <img src="elbow_method.png" alt="肘部法则">
+                        <div class="chart-label">肘部法则</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="page-section" id="featureAnalysis">
-                <div class="card">
+        </div>
+        
+        <div class="page-section" id="featureAnalysis">
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">🔥</span>
                         特征重要性分析
                     </div>
-                    <div class="text-section">
-                        <p><strong>分析方法：</strong>采用随机森林回归模型进行特征重要性评估。</p>
-                        <p><strong>模型参数：</strong>n_estimators=100, random_state=42</p>
-                    </div>
                 </div>
-                
-                <div class="card">
+                <div class="text-section">
+                    <p><strong>分析方法：</strong>采用随机森林回归模型进行特征重要性评估。</p>
+                    <p><strong>模型参数：</strong>n_estimators=100, random_state=42</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">📊</span>
                         特征重要性图表
                     </div>
-                    <div class="chart-grid">
-                        <div class="chart-box" style="grid-column: span 2;">
-                            <img src="feature_importance.png" alt="特征重要性" style="max-height: 250px;">
-                            <div class="chart-label">Top 20 特征重要性</div>
-                        </div>
-                        <div class="analysis-card" style="grid-column: span 1;">
-                            <div class="analysis-title">分析结论</div>
-                            <div class="analysis-desc">前10个特征贡献了65%的重要性权重，其中特征A、特征B、特征C是影响点击率的最关键因素。</div>
-                        </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                    <div class="chart-box" style="grid-column: span 2;">
+                        <img src="feature_importance.png" alt="特征重要性" style="max-height: 280px;">
+                        <div class="chart-label">Top 20 特征重要性</div>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="analysis-title">分析结论</div>
+                        <div class="analysis-desc">前10个特征贡献了65%的重要性权重，其中特征A、特征B、特征C是影响点击率的最关键因素。</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="page-section" id="clusterAnalysis">
-                <div class="card">
+        </div>
+        
+        <div class="page-section" id="clusterAnalysis">
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">🔍</span>
                         K-Means聚类分析
                     </div>
-                    <div class="text-section">
-                        <p><strong>聚类方法：</strong>K-Means算法</p>
-                        <p><strong>聚类数确定：</strong>采用肘部法则确定最佳聚类数为4</p>
-                        <p><strong>降维方法：</strong>PCA降维至2维用于可视化</p>
-                    </div>
                 </div>
-                
-                <div class="card">
+                <div class="text-section">
+                    <p><strong>聚类方法：</strong>K-Means算法</p>
+                    <p><strong>聚类数确定：</strong>采用肘部法则确定最佳聚类数为4</p>
+                    <p><strong>降维方法：</strong>PCA降维至2维用于可视化</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">📈</span>
                         聚类可视化
                     </div>
-                    <div class="chart-grid">
-                        <div class="chart-box" style="grid-column: span 2;">
-                            <img src="clustering_result.png" alt="聚类结果">
-                            <div class="chart-label">用户聚类结果(PCA降维)</div>
-                        </div>
-                        <div class="chart-box">
-                            <img src="cluster_ctr.png" alt="各簇点击率">
-                            <div class="chart-label">各簇点击率对比</div>
-                        </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                    <div class="chart-box">
+                        <img src="clustering_result.png" alt="聚类结果">
+                        <div class="chart-label">用户聚类结果(PCA降维)</div>
+                    </div>
+                    <div class="chart-box">
+                        <img src="cluster_ctr.png" alt="各簇点击率">
+                        <div class="chart-label">各簇点击率对比</div>
                     </div>
                 </div>
-                
-                <div class="card">
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">🎯</span>
                         簇分析结果
                     </div>
-                    <div class="table-container">
-                        <table class="data-table">
-                            <tr>
-                                <th>簇标签</th>
-                                <th>平均点击率</th>
-                                <th>样本数</th>
-                                <th>占比</th>
-                                <th>群体特征</th>
-                            </tr>
-                            <tr>
-                                <td>簇0</td>
-                                <td><span class="highlight highlight-low">2.69%</span></td>
-                                <td>620</td>
-                                <td>26.3%</td>
-                                <td>低点击率群体，需要重点优化</td>
-                            </tr>
-                            <tr>
-                                <td>簇1</td>
-                                <td><span class="highlight highlight-medium">3.81%</span></td>
-                                <td>580</td>
-                                <td>24.6%</td>
-                                <td>中等点击率群体，有提升空间</td>
-                            </tr>
-                            <tr>
-                                <td>簇2</td>
-                                <td><span class="highlight highlight-high">5.16%</span></td>
-                                <td>650</td>
-                                <td>27.6%</td>
-                                <td>高点击率群体，保持现有策略</td>
-                            </tr>
-                            <tr>
-                                <td>簇3</td>
-                                <td><span class="highlight highlight-high">5.03%</span></td>
-                                <td>509</td>
-                                <td>21.5%</td>
-                                <td>高点击率群体，保持现有策略</td>
-                            </tr>
-                        </table>
-                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <tr>
+                            <th>簇标签</th>
+                            <th>平均点击率</th>
+                            <th>样本数</th>
+                            <th>占比</th>
+                            <th>群体特征</th>
+                        </tr>
+                        <tr>
+                            <td>簇0</td>
+                            <td><span class="highlight highlight-low">2.69%</span></td>
+                            <td>620</td>
+                            <td>26.3%</td>
+                            <td>低点击率群体，需要重点优化</td>
+                        </tr>
+                        <tr>
+                            <td>簇1</td>
+                            <td><span class="highlight highlight-medium">3.81%</span></td>
+                            <td>580</td>
+                            <td>24.6%</td>
+                            <td>中等点击率群体，有提升空间</td>
+                        </tr>
+                        <tr>
+                            <td>簇2</td>
+                            <td><span class="highlight highlight-high">5.16%</span></td>
+                            <td>650</td>
+                            <td>27.6%</td>
+                            <td>高点击率群体，保持现有策略</td>
+                        </tr>
+                        <tr>
+                            <td>簇3</td>
+                            <td><span class="highlight highlight-high">5.03%</span></td>
+                            <td>509</td>
+                            <td>21.5%</td>
+                            <td>高点击率群体，保持现有策略</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            
-            <div class="page-section" id="modelEvaluation">
-                <div class="card">
+        </div>
+        
+        <div class="page-section" id="modelEvaluation">
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">📊</span>
                         模型评估指标
                     </div>
-                    <div class="metric-grid">
-                        <div class="metric-card">
-                            <div class="metric-value" style="color: #dc2626;">6.35</div>
-                            <div class="metric-label">均方误差(MSE)</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-value" style="color: #16a34a;">87.08%</div>
-                            <div class="metric-label">决定系数(R²)</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-value" style="color: #3b82f6;">4</div>
-                            <div class="metric-label">最佳聚类数</div>
-                        </div>
-                        <div class="metric-card">
-                            <div class="metric-value" style="color: #f59e0b;">2.47%</div>
-                            <div class="metric-label">最大点击率差异</div>
-                        </div>
+                </div>
+                <div class="metric-grid">
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #dc2626;">6.35</div>
+                        <div class="metric-label">均方误差(MSE)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #16a34a;">87.08%</div>
+                        <div class="metric-label">决定系数(R²)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #3b82f6;">4</div>
+                        <div class="metric-label">最佳聚类数</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: #f59e0b;">2.47%</div>
+                        <div class="metric-label">最大点击率差异</div>
                     </div>
                 </div>
-                
-                <div class="card">
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">📈</span>
                         模型性能对比
                     </div>
-                    <div class="chart-grid">
-                        <div class="chart-box" style="grid-column: span 2;">
-                            <img src="feature_importance.png" alt="模型对比" style="max-height: 200px;">
-                            <div class="chart-label">模型性能对比</div>
-                        </div>
-                        <div class="analysis-card">
-                            <div class="analysis-title">模型对比结果</div>
-                            <div class="analysis-desc">随机森林: 87.08%<br>梯度提升: 85.42%<br>逻辑回归: 78.35%<br>支持向量机: 81.22%</div>
-                        </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+                    <div class="chart-box">
+                        <img src="feature_importance.png" alt="模型对比" style="max-height: 220px;">
+                        <div class="chart-label">模型性能对比</div>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="analysis-title">模型对比结果</div>
+                        <div class="analysis-desc">随机森林: 87.08%<br>梯度提升: 85.42%<br>逻辑回归: 78.35%<br>支持向量机: 81.22%</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="page-section" id="results">
-                <div class="card">
+        </div>
+        
+        <div class="page-section" id="results">
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">📊</span>
                         分析结果摘要
                     </div>
-                    <div class="text-section">
-                        <p><strong>数据概况：</strong>本研究基于add.csv数据集，包含3,280条原始记录，经过数据清洗后保留2,359条有效记录，涉及1,560个特征维度。</p>
-                        <p><strong>模型性能：</strong>随机森林模型表现最优，R²达到87.08%，表明特征对点击率有很强的解释能力。</p>
-                        <p><strong>聚类结果：</strong>通过K-Means聚类将用户分为4个群体，各群体点击率差异显著(2.69% - 5.16%)。</p>
-                    </div>
                 </div>
-                
-                <div class="card">
+                <div class="text-section">
+                    <p><strong>数据概况：</strong>本研究基于add.csv数据集，包含3,280条原始记录，经过数据清洗后保留2,359条有效记录，涉及1,560个特征维度。</p>
+                    <p><strong>模型性能：</strong>随机森林模型表现最优，R²达到87.08%，表明特征对点击率有很强的解释能力。</p>
+                    <p><strong>聚类结果：</strong>通过K-Means聚类将用户分为4个群体，各群体点击率差异显著(2.69% - 5.16%)。</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">📈</span>
                         可视化结果汇总
                     </div>
-                    <div class="chart-grid">
-                        <div class="chart-box">
-                            <img src="ctr_distribution.png" alt="点击率分布">
-                            <div class="chart-label">点击率分布图</div>
-                        </div>
-                        <div class="chart-box">
-                            <img src="impression_click.png" alt="曝光量与点击量关系">
-                            <div class="chart-label">曝光量与点击量关系图</div>
-                        </div>
-                        <div class="chart-box">
-                            <img src="feature_importance.png" alt="特征重要性">
-                            <div class="chart-label">特征重要性图</div>
-                        </div>
-                        <div class="chart-box">
-                            <img src="elbow_method.png" alt="肘部法则">
-                            <div class="chart-label">肘部法则图</div>
-                        </div>
-                        <div class="chart-box">
-                            <img src="clustering_result.png" alt="聚类结果">
-                            <div class="chart-label">用户聚类结果图</div>
-                        </div>
-                        <div class="chart-box">
-                            <img src="cluster_ctr.png" alt="各簇点击率对比">
-                            <div class="chart-label">各簇点击率对比图</div>
-                        </div>
+                </div>
+                <div class="chart-grid">
+                    <div class="chart-box">
+                        <img src="ctr_distribution.png" alt="点击率分布">
+                        <div class="chart-label">点击率分布图</div>
+                    </div>
+                    <div class="chart-box">
+                        <img src="impression_click.png" alt="曝光量与点击量关系">
+                        <div class="chart-label">曝光量与点击量关系图</div>
+                    </div>
+                    <div class="chart-box">
+                        <img src="feature_importance.png" alt="特征重要性">
+                        <div class="chart-label">特征重要性图</div>
+                    </div>
+                    <div class="chart-box">
+                        <img src="elbow_method.png" alt="肘部法则">
+                        <div class="chart-label">肘部法则图</div>
+                    </div>
+                    <div class="chart-box">
+                        <img src="clustering_result.png" alt="聚类结果">
+                        <div class="chart-label">用户聚类结果图</div>
+                    </div>
+                    <div class="chart-box">
+                        <img src="cluster_ctr.png" alt="各簇点击率对比">
+                        <div class="chart-label">各簇点击率对比图</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="page-section" id="recommendations">
-                <div class="card">
+        </div>
+        
+        <div class="page-section" id="recommendations">
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">💡</span>
                         优化建议
                     </div>
-                    <div class="strategy-list">
-                        <li><strong>针对高点击率群体(簇2、簇3)：</strong>保持现有广告投放策略，进一步优化推荐精度，提高用户体验。</li>
-                        <li><strong>针对中等点击率群体(簇1)：</strong>分析用户特征，调整广告内容，尝试个性化推荐策略。</li>
-                        <li><strong>针对低点击率群体(簇0)：</strong>重点优化对象，调整广告投放策略，分析原因并改进。</li>
-                        <li><strong>特征优化：</strong>重点关注前20个重要特征，优化特征工程，提高模型预测能力。</li>
-                        <li><strong>曝光量控制：</strong>曝光量与点击量呈现正相关，但存在边际效益递减，建议合理控制曝光量。</li>
-                    </div>
                 </div>
-                
-                <div class="card">
+                <div class="strategy-list">
+                    <li><strong>针对高点击率群体(簇2、簇3)：</strong>保持现有广告投放策略，进一步优化推荐精度，提高用户体验。</li>
+                    <li><strong>针对中等点击率群体(簇1)：</strong>分析用户特征，调整广告内容，尝试个性化推荐策略。</li>
+                    <li><strong>针对低点击率群体(簇0)：</strong>重点优化对象，调整广告投放策略，分析原因并改进。</li>
+                    <li><strong>特征优化：</strong>重点关注前20个重要特征，优化特征工程，提高模型预测能力。</li>
+                    <li><strong>曝光量控制：</strong>曝光量与点击量呈现正相关，但存在边际效益递减，建议合理控制曝光量。</li>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
                     <div class="card-title">
                         <span class="card-title-icon">🎯</span>
                         行动建议
                     </div>
-                    <div class="analysis-grid">
-                        <div class="analysis-card">
-                            <div class="analysis-title">短期目标</div>
-                            <div class="analysis-desc">针对簇0群体进行A/B测试，测试不同广告策略的效果。</div>
-                        </div>
-                        <div class="analysis-card">
-                            <div class="analysis-title">中期目标</div>
-                            <div class="analysis-desc">优化特征工程，引入更多用户行为特征，提升模型性能。</div>
-                        </div>
-                        <div class="analysis-card">
-                            <div class="analysis-title">长期目标</div>
-                            <div class="analysis-desc">构建实时推荐系统，实现个性化广告推荐。</div>
-                        </div>
-                        <div class="analysis-card">
-                            <div class="analysis-title">监测指标</div>
-                            <div class="analysis-desc">建立定期监测机制，跟踪各簇点击率变化情况。</div>
-                        </div>
+                </div>
+                <div class="analysis-grid">
+                    <div class="analysis-card">
+                        <div class="analysis-title">短期目标</div>
+                        <div class="analysis-desc">针对簇0群体进行A/B测试，测试不同广告策略的效果。</div>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="analysis-title">中期目标</div>
+                        <div class="analysis-desc">优化特征工程，引入更多用户行为特征，提升模型性能。</div>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="analysis-title">长期目标</div>
+                        <div class="analysis-desc">构建实时推荐系统，实现个性化广告推荐。</div>
+                    </div>
+                    <div class="analysis-card">
+                        <div class="analysis-title">监测指标</div>
+                        <div class="analysis-desc">建立定期监测机制，跟踪各簇点击率变化情况。</div>
                     </div>
                 </div>
             </div>
@@ -991,14 +1015,9 @@
     </div>
 
     <script>
-        function toggleSubmenu(id) {
-            const submenu = document.getElementById(id);
-            submenu.classList.toggle('show');
-        }
-        
         function showSection(sectionId) {
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            document.querySelectorAll('.nav-subitem').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll('.submenu-item').forEach(item => item.classList.remove('active'));
             document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
             
             event.target.classList.add('active');
@@ -1006,23 +1025,7 @@
             const section = document.getElementById(sectionId);
             if (section) {
                 section.classList.add('active');
-                document.getElementById('pageTitle').textContent = getSectionTitle(sectionId);
             }
-        }
-        
-        function getSectionTitle(id) {
-            const titles = {
-                'home': '首页概览',
-                'dataOverview': '数据概览',
-                'dataPreprocessing': '数据预处理',
-                'dataStatistics': '描述统计',
-                'featureAnalysis': '特征重要性分析',
-                'clusterAnalysis': '聚类分析',
-                'modelEvaluation': '模型评估',
-                'results': '分析结果',
-                'recommendations': '优化建议'
-            };
-            return titles[id] || '首页概览';
         }
     </script>
 </body>
