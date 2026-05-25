@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据可视化大屏 - 电商广告推荐效果分析</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+        .header {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: #3b82f6;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+        .header-title {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .back-btn {
+            padding: 10px 20px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            color: #475569;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .back-btn:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            padding: 24px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .card-2x1 { grid-column: span 2; }
+        .card-3x1 { grid-column: span 3; }
+        .card-4x1 { grid-column: span 4; }
+        .card-6x1 { grid-column: span 6; }
+        .card-full { grid-column: span 12; }
+        .card-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .stat-value {
+            font-size: 32px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+        .stat-label {
+            font-size: 13px;
+            color: #64748b;
+        }
+        .stat-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            margin-top: 8px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        .stat-change.up {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .stat-change.down {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .chart-container {
+            width: 100%;
+            height: 240px;
+            margin-top: 8px;
+        }
+        .chart-container-small {
+            height: 200px;
+        }
+        .cluster-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+        .cluster-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+        .cluster-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+        .cluster-value {
+            font-size: 22px;
+            font-weight: 600;
+        }
+        .cluster-0 { color: #dc2626; }
+        .cluster-1 { color: #ca8a04; }
+        .cluster-2 { color: #16a34a; }
+        .cluster-3 { color: #0ea5e9; }
+        .progress-section {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .progress-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            border: 8px solid #e2e8f0;
+            border-top-color: #3b82f6;
+            border-right-color: #3b82f6;
+            border-bottom-color: #e2e8f0;
+            transform: rotate(45deg);
+        }
+        .progress-inner {
+            transform: rotate(-45deg);
+        }
+        .progress-number {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        .progress-text {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        .metrics-inline {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .metric-item {
+            text-align: center;
+        }
+        .metric-value {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        .metric-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">📊</div>
+            <div class="header-title">电商广告推荐效果分析</div>
+        </div>
+        <button class="back-btn" onclick="window.location.href='index.html'">
+            ← 返回主页
+        </button>
+    </div>
+    
+    <div class="dashboard">
+        <div class="card card-3x1">
+            <div class="card-title">总样本数</div>
+            <div class="stat-value">3,280</div>
+            <div class="stat-label">原始数据记录</div>
+            <div class="stat-change up">↑ 12.5% 较上周</div>
+        </div>
+        
+        <div class="card card-3x1">
+            <div class="card-title">有效样本</div>
+            <div class="stat-value">2,359</div>
+            <div class="stat-label">清理后数据</div>
+            <div class="stat-change up">↑ 8.3% 较上周</div>
+        </div>
+        
+        <div class="card card-3x1">
+            <div class="card-title">平均点击率</div>
+            <div class="stat-value">3.91%</div>
+            <div class="stat-label">CTR 均值</div>
+            <div class="stat-change down">↓ 0.2% 较上周</div>
+        </div>
+        
+        <div class="card card-3x1">
+            <div class="card-title">特征维度</div>
+            <div class="stat-value">1,560</div>
+            <div class="stat-label">分析特征数</div>
+            <div class="stat-change up">↑ 156 新增</div>
+        </div>
+        
+        <div class="card card-6x1">
+            <div class="card-title">点击率分布趋势</div>
+            <div class="chart-container">
+                <canvas id="ctrChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="card card-6x1">
+            <div class="card-title">模型性能对比</div>
+            <div class="chart-container">
+                <canvas id="modelChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="card card-4x1">
+            <div class="card-title">聚类分析结果</div>
+            <div class="cluster-grid">
+                <div class="cluster-item">
+                    <div class="cluster-label">簇0 - 低点击</div>
+                    <div class="cluster-value cluster-0">2.69%</div>
+                </div>
+                <div class="cluster-item">
+                    <div class="cluster-label">簇1 - 中点击</div>
+                    <div class="cluster-value cluster-1">3.81%</div>
+                </div>
+                <div class="cluster-item">
+                    <div class="cluster-label">簇2 - 高点击</div>
+                    <div class="cluster-value cluster-2">5.16%</div>
+                </div>
+                <div class="cluster-item">
+                    <div class="cluster-label">簇3 - 高点击</div>
+                    <div class="cluster-value cluster-3">5.03%</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card card-4x1">
+            <div class="card-title">模型评估指标</div>
+            <div class="progress-section">
+                <div class="progress-circle">
+                    <div class="progress-inner">
+                        <div class="progress-number">87%</div>
+                    </div>
+                </div>
+                <div class="progress-text">R² Score</div>
+                <div class="metrics-inline">
+                    <div class="metric-item">
+                        <div class="metric-value" style="color: #dc2626;">6.35</div>
+                        <div class="metric-label">MSE</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value" style="color: #16a34a;">4</div>
+                        <div class="metric-label">聚类数</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card card-4x1">
+            <div class="card-title">各簇点击率占比</div>
+            <div class="chart-container chart-container-small">
+                <canvas id="clusterPieChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="card card-6x1">
+            <div class="card-title">特征重要性 Top 10</div>
+            <div class="chart-container">
+                <canvas id="featureChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="card card-6x1">
+            <div class="card-title">曝光量与点击量关系</div>
+            <div class="chart-container">
+                <canvas id="impressionChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="card card-full">
+            <div class="card-title">各簇点击率对比分析</div>
+            <div class="chart-container" style="height: 280px;">
+                <canvas id="clusterBarChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            new Chart(document.getElementById('ctrChart'), {
+                type: 'line',
+                data: {
+                    labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+                    datasets: [{
+                        label: '点击率',
+                        data: [3.2, 3.5, 3.8, 4.1, 3.9, 4.2, 4.0, 3.7, 3.9, 4.1, 3.8, 3.91],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointBackgroundColor: '#3b82f6',
+                        pointRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: { grid: { color: '#f1f5f9' }, ticks: { color: '#64748b' } },
+                        y: { grid: { color: '#f1f5f9' }, ticks: { color: '#64748b', callback: v => v + '%' } }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('modelChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['随机森林', '梯度提升', '逻辑回归', '支持向量机'],
+                    datasets: [{
+                        label: '准确率',
+                        data: [87.08, 85.42, 78.35, 81.22],
+                        backgroundColor: ['#3b82f6', '#8b5cf6', '#06b6d4', '#10b981'],
+                        borderRadius: 6,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#64748b' } },
+                        y: { grid: { color: '#f1f5f9' }, ticks: { color: '#64748b', callback: v => v + '%' } }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('clusterPieChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['簇0 (低点击)', '簇1 (中点击)', '簇2 (高点击)', '簇3 (高点击)'],
+                    datasets: [{
+                        data: [2.69, 3.81, 5.16, 5.03],
+                        backgroundColor: ['#dc2626', '#ca8a04', '#16a34a', '#0ea5e9'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#64748b', padding: 15, font: { size: 12 } }
+                        }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('featureChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['特征A', '特征B', '特征C', '特征D', '特征E', '特征F', '特征G', '特征H', '特征I', '特征J'],
+                    datasets: [{
+                        label: '重要性',
+                        data: [0.15, 0.12, 0.10, 0.08, 0.07, 0.06, 0.05, 0.04, 0.03, 0.02],
+                        backgroundColor: '#3b82f6',
+                        borderRadius: 4,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: '#f1f5f9' }, ticks: { color: '#64748b' } },
+                        y: { grid: { display: false }, ticks: { color: '#64748b' } }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('impressionChart'), {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: '曝光与点击',
+                        data: [
+                            { x: 100, y: 3 }, { x: 200, y: 7 }, { x: 300, y: 12 },
+                            { x: 400, y: 18 }, { x: 500, y: 25 }, { x: 600, y: 32 },
+                            { x: 700, y: 38 }, { x: 800, y: 42 }, { x: 900, y: 45 },
+                            { x: 1000, y: 47 }, { x: 1100, y: 48 }, { x: 1200, y: 49 }
+                        ],
+                        backgroundColor: '#8b5cf6',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { title: { display: true, text: '曝光量', color: '#64748b' }, grid: { color: '#f1f5f9' }, ticks: { color: '#64748b' } },
+                        y: { title: { display: true, text: '点击量', color: '#64748b' }, grid: { color: '#f1f5f9' }, ticks: { color: '#64748b' } }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('clusterBarChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['簇0', '簇1', '簇2', '簇3'],
+                    datasets: [{
+                        label: '点击率',
+                        data: [2.69, 3.81, 5.16, 5.03],
+                        backgroundColor: ['#dc2626', '#ca8a04', '#16a34a', '#0ea5e9'],
+                        borderRadius: 6,
+                        borderSkipped: false
+                    }, {
+                        label: '样本数',
+                        data: [620, 580, 650, 509],
+                        backgroundColor: '#e2e8f0',
+                        borderRadius: 6,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { color: '#64748b', padding: 20 }
+                        }
+                    },
+                    scales: {
+                        x: { grid: { display: false }, ticks: { color: '#64748b' } },
+                        y: { grid: { color: '#f1f5f9' }, ticks: { color: '#64748b' } }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
